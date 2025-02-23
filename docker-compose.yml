@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: host-monitor-dev
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./app:/app/app
+    environment:
+      - PROJECT_NAME=PingerDev
+      - EMAIL_FROM=swecc@uw.edu
+      - DEV_MODE=true
+      - MONITOR_INTERVAL=60
+      - PING_TIMEOUT=1.0
+    cap_add:
+      - NET_RAW
+      - NET_ADMIN
+    restart: unless-stopped
